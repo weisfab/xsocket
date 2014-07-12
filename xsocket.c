@@ -52,10 +52,9 @@ static int lsocket_connect(lua_State *L)
 {
     struct sockaddr_in sa;
     struct hostent *hp;
-    
-    int sockfd=luaL_checknumber(L, 1);
-    const char *host=luaL_checkstring(L, 2);
-    int port = luaL_checkint(L, 3);
+    int sockfd = -1;
+    const char *host=luaL_checkstring(L, 1);
+    int port = luaL_checkint(L, 2);
     /* Get the host. */
     hp = gethostbyname(host);
     bcopy((char *)hp->h_addr, (char *)&sa.sin_addr, hp->h_length);
@@ -64,7 +63,7 @@ static int lsocket_connect(lua_State *L)
     sockfd = socket(hp->h_addrtype, SOCK_STREAM, 0);
     /* connect */
     int ret = connect(sockfd, (struct sockaddr *)&sa, sizeof(sa));
-    lua_pushnumber(L, ret);
+    lua_pushnumber(L, sockfd);
     return 1 ;
 }
 
@@ -131,7 +130,6 @@ static int lsocket_newsocket(lua_State *L){
     int socketfd=socket(AF_INET, SOCK_STREAM, 0);
     int on   = 1;
     setsockopt( socketfd, SOL_SOCKET, SO_REUSEADDR, &on, sizeof(on) );
-    set_socket_noblock(socketfd);
     lua_pushinteger(L, socketfd);
     return 1;
 }
@@ -142,7 +140,6 @@ static int lsocket_accept(lua_State *L)
     struct sockaddr_in  cli_addr;
     clilen = sizeof(cli_addr);
     int newsockfd = accept(sockfd, (struct sockaddr *) &cli_addr, &clilen);
-    set_socket_noblock(newsockfd);
     lua_pushinteger(L, newsockfd);
     lua_pushstring(L,inet_ntoa(cli_addr.sin_addr));
     return 2;
