@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <title>Xsocket by skysent</title>
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <h1>Xsocket</h1>
+        <h2>super lightweight socket lib for lua 5.2</h2>
+
+        <section id="downloads">
+          <a href="https://github.com/skysent/xsocket/zipball/master" class="btn">Download as .zip</a>
+          <a href="https://github.com/skysent/xsocket/tarball/master" class="btn">Download as .tar.gz</a>
+          <a href="https://github.com/skysent/xsocket" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <h1>
+<a name="xsocket" class="anchor" href="#xsocket"><span class="octicon octicon-link"></span></a>xsocket</h1>
+
+<p>super lightweight socket lib for lua 5.2</p>
+
+<h1>
+<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h1>
+
+<h2>
+<a name="require-socket-library" class="anchor" href="#require-socket-library"><span class="octicon octicon-link"></span></a>require socket library</h2>
+
+<pre><code>local socket=require "xsocket"
+</code></pre>
+
+<h2>
+<a name="connect-to-server-socket" class="anchor" href="#connect-to-server-socket"><span class="octicon octicon-link"></span></a>connect to server socket</h2>
+
+<div class="highlight highlight-lua"><pre><span class="c1">-- return client_fd represent the client socket fd from bsd socket.</span>
+<span class="c1">-- parameter hostname and port</span>
+<span class="kd">local</span> <span class="n">client_fd</span> <span class="o">=</span> <span class="n">socket</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">"</span><span class="s">www.baidu.com"</span><span class="p">,</span><span class="mi">80</span><span class="p">)</span> 
+</pre></div>
+
+<h2>
+<a name="create-server-socket" class="anchor" href="#create-server-socket"><span class="octicon octicon-link"></span></a>create server socket</h2>
+
+<div class="highlight highlight-lua"><pre><span class="c1">-- return server socket fd</span>
+<span class="kd">local</span> <span class="n">server_fd</span> <span class="o">=</span> <span class="n">socket</span><span class="p">.</span><span class="n">new</span><span class="p">()</span>
+</pre></div>
+
+<h2>
+<a name="bind-server-socket-to-addr" class="anchor" href="#bind-server-socket-to-addr"><span class="octicon octicon-link"></span></a>bind server socket to addr</h2>
+
+<div class="highlight highlight-lua"><pre><span class="kd">local</span> <span class="n">bind_ret</span> <span class="o">=</span> <span class="n">socket</span><span class="p">.</span><span class="n">bind</span><span class="p">(</span><span class="n">server_fd</span><span class="p">,</span><span class="s2">"</span><span class="s">localhost"</span><span class="p">,</span><span class="mi">8080</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">bindret</span><span class="o">&lt;</span><span class="mi">0</span> <span class="k">then</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="s">bind error"</span><span class="p">)</span>
+<span class="k">end</span>
+</pre></div>
+
+<h2>
+<a name="listen" class="anchor" href="#listen"><span class="octicon octicon-link"></span></a>listen</h2>
+
+<div class="highlight highlight-lua"><pre><span class="kd">local</span> <span class="n">listen_ret</span> <span class="o">=</span> <span class="n">socket</span><span class="p">.</span><span class="n">listen</span><span class="p">()</span>
+<span class="k">if</span> <span class="n">listen_ret</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="k">then</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="s">listen error"</span><span class="p">)</span>
+<span class="k">end</span>
+</pre></div>
+
+<h2>
+<a name="accept" class="anchor" href="#accept"><span class="octicon octicon-link"></span></a>accept</h2>
+
+<pre><code>local clientfd=socket.accept(server_fd)
+``` lua
+
+##  write socket
+``` lua
+socket.write(socket_fd,buff)
+</code></pre>
+
+<h2>
+<a name="read-socket" class="anchor" href="#read-socket"><span class="octicon octicon-link"></span></a>read socket</h2>
+
+<div class="highlight highlight-lua"><pre><span class="kd">local</span> <span class="n">readlen</span><span class="p">,</span><span class="n">buff</span> <span class="o">=</span> <span class="n">socket</span><span class="p">.</span><span class="n">read</span><span class="p">(</span><span class="n">socketfd</span><span class="p">,</span><span class="n">expected_len</span><span class="p">)</span>
+</pre></div>
+      </section>
+    </div>
+
+    
+  </body>
+</html>
