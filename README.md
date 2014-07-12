@@ -1,7 +1,7 @@
 xsocket
 =======
 
-super lightweight bsd socket bind for lua 5.2
+super lightweight socket lib for lua 5.2
 
 # Usage
 1. require socket library
