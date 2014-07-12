@@ -1,6 +1,6 @@
 PROJECT (xsocket)
 cmake_minimum_required(VERSION 2.8)
-SET(SRC_DIR ./)
+SET(SRC_DIR src)
 
 SET(SRC_LIST 
     ${SRC_DIR}/xsocket.c
