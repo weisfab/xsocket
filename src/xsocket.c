@@ -19,7 +19,6 @@ static int set_socket_noblock(sockfd){
     if ((flag = fcntl(sockfd, F_GETFL, 0) <0)){
         return -1;
     }
-    
     flag |= O_NONBLOCK;
     if (fcntl(sockfd, F_SETFL, flag) < 0){
         return -1;
@@ -32,7 +31,12 @@ static int lsocket_listen(lua_State *L){
     lua_pushnumber(L, r);
     return 1;
 }
-
+static int lsocket_setsync(lua_State *L){
+    int sockfd=luaL_checkint(L, 1);
+    int ret=set_socket_noblock(sockfd);
+    lua_pushnumber(L,ret);
+    return 1;
+}
 static int lsocket_bind(lua_State *L)
 {
     int sockfd=luaL_checkint(L, 1);
@@ -147,8 +151,8 @@ static int lsocket_accept(lua_State *L)
 
 
 static const luaL_Reg socket_method[] ={
-    {"new",		lsocket_newsocket},
-    
+    {"new",		    lsocket_newsocket},
+    {"async",       lsocket_setsync},
     {"bind",		lsocket_bind},
     {"listen",		lsocket_listen},
     {"accept",		lsocket_accept},
@@ -157,7 +161,7 @@ static const luaL_Reg socket_method[] ={
     {"write",		lsocket_write},
     {"close",       lsocket_close},
     {"sendfile",    lsocket_sendfile},
-    {NULL,		NULL}
+    {NULL,		    NULL}
 };
 static void signal_function(int signal) {
     fprintf(stderr, "singnal:%d\n",signal);
