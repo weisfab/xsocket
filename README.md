@@ -34,10 +34,10 @@ if listen_ret < 0 then
 end
 ```
 ## accept
-```
+``` lua
 local clientfd=socket.accept(server_fd)
 
-``` lua
+``` 
 ## write socket
 ``` lua
 socket.write(socket_fd,buff)
